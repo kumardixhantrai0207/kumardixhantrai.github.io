@@ -361,15 +361,14 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 10000;
-      transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), background 0.3s;
       transform: translate(-50%, -50%);
+      transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), background-color 0.3s, border-color 0.3s;
       mix-blend-mode: difference;
     }
-
-    #cursor-dot.expanded {
-      width: 40px;
-      height: 40px;
-      background: transparent;
+    #cursor-dot.link-hover {
+      width: 48px;
+      height: 48px;
+      background-color: transparent !important;
       border: 2px solid var(--accent-teal);
     }
 
@@ -455,6 +454,7 @@
       padding: 120px 48px;
       max-width: 1200px;
       margin: 0 auto;
+      perspective: 1000px;
     }
 
     .section-label {
@@ -819,9 +819,9 @@
       top: 0;
       left: 0;
       width: 2px;
-      height: 0;
-      background: var(--accent-teal);
-      transition: height 1.5s var(--ease-out-expo);
+      height: 0%;
+      background: linear-gradient(to bottom, var(--accent-teal), var(--accent-blue));
+      transition: none;
     }
 
     .timeline-line.draw {
@@ -2381,11 +2381,11 @@
       });
 
       // ==========================================
-      // CUSTOM CURSOR (lerp smooth follow)
+      // CUSTOM CURSOR (lerp smooth follow & standard hovers)
       // ==========================================
       const cursorDot = document.getElementById('cursor-dot');
-      let cursorX = 0, cursorY = 0;
-      let dotX = 0, dotY = 0;
+      let cursorX = -100, cursorY = -100;
+      let dotX = -100, dotY = -100;
 
       if (window.innerWidth > 768 && !prefersReducedMotion) {
         document.addEventListener('mousemove', (e) => {
@@ -2396,22 +2396,56 @@
         });
 
         function animateCursor() {
-          dotX += (cursorX - dotX) * 0.15;
-          dotY += (cursorY - dotY) * 0.15;
+          dotX += (cursorX - dotX) * 0.16;
+          dotY += (cursorY - dotY) * 0.16;
           cursorDot.style.left = dotX + 'px';
           cursorDot.style.top = dotY + 'px';
           requestAnimationFrame(animateCursor);
         }
         animateCursor();
 
-        // Expand on hover over links/buttons
-        const hoverTargets = document.querySelectorAll('a, button, .btn-ghost, .icon-link, .project-card, .about-image-wrapper');
+        // Target all links, cards, and buttons for hollow ring expand hover
+        const hoverTargets = document.querySelectorAll('a:not(.tracker-item), button, .btn-ghost, .icon-link, .project-card, .pillar-card, .about-image-wrapper');
         hoverTargets.forEach(el => {
-          el.addEventListener('mouseenter', () => cursorDot.classList.add('expanded'));
-          el.addEventListener('mouseleave', () => cursorDot.classList.remove('expanded'));
+          el.addEventListener('mouseenter', () => {
+            cursorDot.classList.add('link-hover');
+          });
+          el.addEventListener('mouseleave', () => {
+            cursorDot.classList.remove('link-hover');
+          });
         });
       } else {
         cursorDot.style.display = 'none';
+      }
+
+      // ==========================================
+      // 3D CARD TILT EFFECT
+      // ==========================================
+      const tiltCards = document.querySelectorAll('.project-card, .pillar-card');
+
+      if (window.innerWidth > 768 && !prefersReducedMotion) {
+        tiltCards.forEach(card => {
+          card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const maxTilt = 8;
+            
+            const rotateY = ((x - centerX) / centerX) * maxTilt;
+            const rotateX = -((y - centerY) / centerY) * maxTilt;
+            
+            card.style.transition = 'transform 0.05s ease-out, box-shadow 0.3s';
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+          });
+
+          card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.5s ease, box-shadow 0.4s var(--ease-out-expo)';
+            card.style.transform = 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+          });
+        });
       }
 
       // ==========================================
@@ -2547,18 +2581,33 @@
       const timelineLine = document.getElementById('timeline-line');
       const timeline = document.getElementById('timeline');
 
-      if (timeline && timelineLine) {
-        const timelineObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              timelineLine.classList.add('draw');
-              timelineObserver.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.1 });
+      // ==========================================
+      // SCROLL-LINKED TIMELINE DRAW
+      // ==========================================
+      const timelineProgressBar = document.getElementById('timeline-line');
 
-        timelineObserver.observe(timeline);
+      function handleTimelineScroll() {
+        if (!timeline || !timelineProgressBar) return;
+        
+        const rect = timeline.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Progress starts when timeline top reaches 75% of viewport
+        // Progress completes when timeline bottom reaches 25% of viewport
+        const startTrigger = viewportHeight * 0.75;
+        const endTrigger = viewportHeight * 0.25;
+        
+        const totalHeight = rect.height;
+        const currentPos = startTrigger - rect.top;
+        
+        let progress = currentPos / (totalHeight + startTrigger - endTrigger);
+        progress = Math.max(0, Math.min(1, progress));
+        
+        timelineProgressBar.style.height = (progress * 100) + '%';
       }
+
+      window.addEventListener('scroll', handleTimelineScroll, { passive: true });
+      window.addEventListener('load', handleTimelineScroll);
 
       // ==========================================
       // THEME TOGGLE & PERSISTENCE
