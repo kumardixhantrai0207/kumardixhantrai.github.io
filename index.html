@@ -977,6 +977,9 @@
     }
 
     .tech-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-family: var(--font-body);
       font-size: 12px;
       font-weight: 500;
@@ -1044,6 +1047,9 @@
     }
 
     .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-family: var(--font-body);
       font-size: 13px;
       font-weight: 400;
@@ -1064,6 +1070,15 @@
 
     .skill-pill:hover {
       border-color: var(--accent-teal);
+    }
+
+    .pill-logo {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+      pointer-events: none;
     }
 
     /* ============================================
@@ -1409,6 +1424,151 @@
         transform: translateY(-6px);
       }
     }
+
+    /* Contact Mascot Column Layout */
+    .contact-grid-layout {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 64px;
+      align-items: center;
+      text-align: left;
+    }
+    .contact-links {
+      justify-content: flex-start;
+      margin-bottom: 40px !important;
+    }
+    @media (max-width: 992px) {
+      .contact-grid-layout {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        text-align: center;
+      }
+      .contact-links {
+        justify-content: center !important;
+      }
+      .contact-headline, .contact-sub {
+        text-align: center;
+      }
+    }
+    .contact-mascot-wrapper {
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .mascot-svg {
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    /* Mascot Visibility States */
+    .snoopy-woke {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s;
+    }
+    .snoopy-sleeping {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease, visibility 0.3s;
+    }
+    .contact-mascot-wrapper:hover .snoopy-woke,
+    .contact-mascot-wrapper.woke .snoopy-woke {
+      opacity: 1;
+      visibility: visible;
+    }
+    .contact-mascot-wrapper:hover .snoopy-sleeping,
+    .contact-mascot-wrapper.woke .snoopy-sleeping {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Tail wagging on hover */
+    .contact-mascot-wrapper:hover .snoopy-tail,
+    .contact-mascot-wrapper.woke .snoopy-tail {
+      animation: wag-tail 0.12s infinite alternate linear;
+      transform-origin: 68px 48px;
+    }
+    @keyframes wag-tail {
+      0% {
+        transform: rotate(-12deg);
+      }
+      100% {
+        transform: rotate(18deg);
+      }
+    }
+
+    /* Ear flopping on hover */
+    .contact-mascot-wrapper:hover .snoopy-ear,
+    .contact-mascot-wrapper.woke .snoopy-ear {
+      animation: flop-ear 0.35s infinite alternate ease-in-out;
+      transform-origin: 82px 20px;
+    }
+    @keyframes flop-ear {
+      0% {
+        transform: rotate(-6deg);
+      }
+      100% {
+        transform: rotate(24deg);
+      }
+    }
+
+    /* Woodstock floating */
+    .woodstock-bird {
+      animation: float-bird 5s infinite ease-in-out;
+      transform-origin: 30px 35px;
+    }
+    .woodstock-wing {
+      animation: flutter-wing 0.18s infinite linear alternate;
+      transform-origin: 28px 35px;
+    }
+    @keyframes float-bird {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      50% {
+        transform: translate(-4px, -10px) rotate(-6deg);
+      }
+    }
+    @keyframes flutter-wing {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(-35deg);
+      }
+    }
+
+    /* Sleeping Zzz animation */
+    .snoopy-zzz text {
+      animation: zzz-float 4s infinite linear;
+      transform-origin: 140px 30px;
+    }
+    .snoopy-zzz text:nth-child(2) {
+      animation-delay: 1.3s;
+    }
+    .snoopy-zzz text:nth-child(3) {
+      animation-delay: 2.6s;
+    }
+    @keyframes zzz-float {
+      0% {
+        transform: translate(0, 0) scale(0.6);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.8;
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(12px, -22px) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    /* ============================================ */
 
     /* ============================================
        RESPONSIVE
@@ -1868,12 +2028,24 @@
         <div class="project-details">
           <div class="project-name">MASt — Modular Adaptive Study Tracker</div>
           <div class="project-tech">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">Claude/OpenAI/Gemini</span>
+            <span class="tech-pill">
+              <svg class="pill-logo python-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M14.25 2.5a1.75 1.75 0 0 0-1.75 1.75v3h3.5a.75.75 0 0 1 .75.75v3.5a1.75 1.75 0 0 0 1.75 1.75h3a1.75 1.75 0 0 0 1.75-1.75v-3.5a3.5 3.5 0 0 0-3.5-3.5h-1v-2a1.75 1.75 0 0 0-1.75-1.75h-3.5zM9.75 21.5a1.75 1.75 0 0 0 1.75-1.75v-3h-3.5a.75.75 0 0 1-.75-.75v-3.5a1.75 1.75 0 0 0-1.75-1.75h-3a1.75 1.75 0 0 0-1.75 1.75v3.5a3.5 3.5 0 0 0 3.5 3.5h1v2a1.75 1.75 0 0 0 1.75 1.75h3.5z" /></svg>
+              Python
+            </span>
+            <span class="tech-pill">
+              <svg class="pill-logo ai-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              Claude/OpenAI/Gemini
+            </span>
             <span class="tech-pill">NLP</span>
             <span class="tech-pill">OCR</span>
-            <span class="tech-pill">Docker</span>
-            <span class="tech-pill">MongoDB</span>
+            <span class="tech-pill">
+              <svg class="pill-logo docker-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #0db7ed;"><path d="M13.983 11.078h2.119c.102 0 .186-.083.186-.185V9.006a.185.185 0 0 0-.186-.186h-2.119a.185.185 0 0 0-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.65h2.118a.185.185 0 0 0 .186-.186V3.354a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.186.185v1.888c0 .102.084.186.186.186m0 2.828h2.118a.185.185 0 0 0 .186-.185V6.184a.185.185 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.186.185v1.887c0 .102.084.185.186.185m-2.954 2.822h2.119c.102 0 .185-.083.185-.186V9.006a.185.185 0 0 0-.185-.186H8.075a.185.185 0 0 0-.185.186v1.888c0 .102.083.185.185.185m0-2.828h2.119a.185.185 0 0 0 .185-.185V6.184a.185.185 0 0 0-.185-.185H8.075a.185.185 0 0 0-.185.185v1.887c0 .102.083.185.185.185m-2.954 2.828h2.119a.185.185 0 0 0 .185-.186V9.006a.185.185 0 0 0-.185-.186H5.12a.185.185 0 0 0-.185.186v1.888c0 .102.083.185.185.185m0-2.828h2.119a.185.185 0 0 0 .185-.185V6.184a.185.185 0 0 0-.185-.185H5.12a.185.185 0 0 0-.185.185v1.887c0 .102.083.185.185.185m-2.954 2.828h2.119a.185.185 0 0 0 .185-.186V9.006a.185.185 0 0 0-.185-.186H2.167a.185.185 0 0 0-.186.186v1.888c0 .102.084.185.186.185m0-2.828h2.119a.185.185 0 0 0 .185-.185V6.184a.185.185 0 0 0-.185-.185H2.167a.185.185 0 0 0-.186.185v1.887c0 .102.084.185.186.185M23.99 9.868c-.359-1.077-1.472-1.782-2.5-1.782h-.244a.185.185 0 0 1-.186-.185c-.092-2.146-1.579-3.923-3.987-3.923a.185.185 0 0 0-.185.185v2.868c0 .102.083.185.185.185H17.4c1.173 0 2.213.754 2.455 1.876a.185.185 0 0 1-.185.225c-.244-.047-.492-.07-.743-.07h-14.8c-.092 0-.171.066-.184.156C3.627 11.238 2 13.627 2 16.34c0 3.992 3.197 7.235 7.159 7.235h1.22c4.858 0 8.625-3.66 9.4-7.553a7.227 7.227 0 0 0 .211-1.734c0-1.637-.624-3.155-1.722-4.148a.186.186 0 0 1-.035-.22" /></svg>
+              Docker
+            </span>
+            <span class="tech-pill">
+              <svg class="pill-logo mongodb-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #13aa52;"><path d="M12 2c-.2 0-.4 0-.6.1C8.6 3.1 6 6.8 6 11.2c0 4.8 2.7 8.2 5.4 9.8.3.2.5.3.6.3.1 0 .3-.1.6-.3 2.7-1.6 5.4-5 5.4-9.8 0-4.4-2.6-8.1-5.4-9.1-.2-.1-.4-.1-.6-.1zm0 2.3c2.1 1 3.9 3.9 3.9 6.9 0 3.6-1.8 6.4-3.9 7.8V4.3z" /></svg>
+              MongoDB
+            </span>
             <span class="tech-pill">Sentence Transformers</span>
             <span class="tech-pill">FAISS</span>
             <span class="tech-pill">PaddleOCR</span>
@@ -1948,10 +2120,19 @@
         <div class="project-details">
           <div class="project-name">Image-Based Detection of Pneumonia</div>
           <div class="project-tech">
-            <span class="tech-pill">Python</span>
+            <span class="tech-pill">
+              <svg class="pill-logo python-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M14.25 2.5a1.75 1.75 0 0 0-1.75 1.75v3h3.5a.75.75 0 0 1 .75.75v3.5a1.75 1.75 0 0 0 1.75 1.75h3a1.75 1.75 0 0 0 1.75-1.75v-3.5a3.5 3.5 0 0 0-3.5-3.5h-1v-2a1.75 1.75 0 0 0-1.75-1.75h-3.5zM9.75 21.5a1.75 1.75 0 0 0 1.75-1.75v-3h-3.5a.75.75 0 0 1-.75-.75v-3.5a1.75 1.75 0 0 0-1.75-1.75h-3a1.75 1.75 0 0 0-1.75 1.75v3.5a3.5 3.5 0 0 0 3.5 3.5h1v2a1.75 1.75 0 0 0 1.75 1.75h3.5z" /></svg>
+              Python
+            </span>
             <span class="tech-pill">CNN</span>
-            <span class="tech-pill">TensorFlow</span>
-            <span class="tech-pill">Keras</span>
+            <span class="tech-pill">
+              <svg class="pill-logo tensorflow-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #FF9900;"><path d="M12 2.69l5.64 3.25v6.5L12 15.69l-5.64-3.25v-6.5L12 2.69m0-2.69L4 4.62v14.76L12 24l8-4.62V4.62L12 0z"/></svg>
+              TensorFlow
+            </span>
+            <span class="tech-pill">
+              <svg class="pill-logo keras-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #D00000;"><rect x="2" y="2" width="20" height="20" rx="4" /><path d="M7 6h3v4.5l3.5-4.5h3.5L13 11l4.5 7h-3.5L10 13v5H7V6z" fill="#FFFFFF" /></svg>
+              Keras
+            </span>
           </div>
           <div class="project-metrics">
             <div class="project-metric">
@@ -2018,12 +2199,30 @@
         <div class="project-details">
           <div class="project-name">Grant Portfolio Dashboard &amp; Budget Tracker</div>
           <div class="project-tech">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">Pandas</span>
-            <span class="tech-pill">Matplotlib</span>
-            <span class="tech-pill">Excel PivotTables</span>
-            <span class="tech-pill">Power Query</span>
-            <span class="tech-pill">SQL</span>
+            <span class="tech-pill">
+              <svg class="pill-logo python-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M14.25 2.5a1.75 1.75 0 0 0-1.75 1.75v3h3.5a.75.75 0 0 1 .75.75v3.5a1.75 1.75 0 0 0 1.75 1.75h3a1.75 1.75 0 0 0 1.75-1.75v-3.5a3.5 3.5 0 0 0-3.5-3.5h-1v-2a1.75 1.75 0 0 0-1.75-1.75h-3.5zM9.75 21.5a1.75 1.75 0 0 0 1.75-1.75v-3h-3.5a.75.75 0 0 1-.75-.75v-3.5a1.75 1.75 0 0 0-1.75-1.75h-3a1.75 1.75 0 0 0-1.75 1.75v3.5a3.5 3.5 0 0 0 3.5 3.5h1v2a1.75 1.75 0 0 0 1.75 1.75h3.5z" /></svg>
+              Python
+            </span>
+            <span class="tech-pill">
+              <svg class="pill-logo pandas-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #130754;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 12c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5 3c-1.66 0-3-1.34-3-3h6c0 1.66-1.34 3-3 3z" /></svg>
+              Pandas
+            </span>
+            <span class="tech-pill">
+              <svg class="pill-logo matplotlib-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #11557c;"><path d="M3 3v18h18" /><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" /></svg>
+              Matplotlib
+            </span>
+            <span class="tech-pill">
+              <svg class="pill-logo excel-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #107C41;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zm-7 16V6h6v4a1 1 0 0 0 1 1h4v9H6z"/><path d="M8 10l3 4-3 4h2l2-3 2 3h2l-3-4 3-4h-2l-2 3-2-3H8z"/></svg>
+              Excel PivotTables
+            </span>
+            <span class="tech-pill">
+              <svg class="pill-logo powerquery-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z M4 12h16 M12 4v16" stroke-dasharray="2" /><path d="M8 8l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              Power Query
+            </span>
+            <span class="tech-pill">
+              <svg class="pill-logo sql-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path></svg>
+              SQL
+            </span>
           </div>
           <div class="project-metrics">
             <div class="project-metric">
@@ -2098,10 +2297,26 @@
         <span class="skill-pill">Risk management</span>
         <span class="skill-pill">Stakeholder coordination</span>
         <span class="skill-pill">RACI/RAID frameworks</span>
-        <span class="skill-pill">Agile</span>
-        <span class="skill-pill">JIRA</span>
-        <span class="skill-pill">Trello</span>
-        <span class="skill-pill">Confluence</span>
+        <span class="skill-pill">
+          <svg class="pill-logo agile-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67" /></svg>
+          Agile
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo jira-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #0052cc;"><path d="M12.5 12.5l-9-9h9v9zm9 0l-9-9h9v9zm0 9l-9-9h9v9z"/></svg>
+          JIRA
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo trello-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #0079BF;"><rect x="3" y="3" width="18" height="18" rx="3" /><rect x="6" y="6" width="4" height="10" rx="1" fill="#FFFFFF" /><rect x="14" y="6" width="4" height="6" rx="1" fill="#FFFFFF" /></svg>
+          Trello
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo confluence-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #0052cc;"><path d="M12 2.2a2 2 0 0 0-2 2v6.4a2 2 0 0 0 4 0V4.2a2 2 0 0 0-2-2zM4.2 10a2 2 0 0 0-2 2c0 1.1.9 2 2 2h6.4a2 2 0 0 0 0-4H4.2zm13.6 0a2 2 0 0 0 0 4H20a2 2 0 0 0 0-4h-2.2zM12 13.8a2 2 0 0 0-2 2V20a2 2 0 0 0 4 0v-4.2a2 2 0 0 0-2-2z" /></svg>
+          Confluence
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo adobe-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #FF0000;"><path d="M13.966 2H22v17.472l-8.034-17.472zM10.034 2H2v17.472L10.034 2zM12 11.233l4.31 9.423h-2.285l-1.077-2.529H9.052L7.975 20.656H5.69L12 11.233z" /></svg>
+          Adobe Creative Suite
+        </span>
       </div>
     </div>
 
@@ -2126,10 +2341,22 @@
         <span class="skill-pill">Forecasting</span>
         <span class="skill-pill">Trend analysis</span>
         <span class="skill-pill">Data visualization</span>
-        <span class="skill-pill">Tableau</span>
-        <span class="skill-pill">Power BI</span>
-        <span class="skill-pill">Excel PivotTables</span>
-        <span class="skill-pill">Power Query</span>
+        <span class="skill-pill">
+          <svg class="pill-logo tableau-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 3v18M3 12h18M7.5 7.5l9 9M7.5 16.5l9-9" stroke-linecap="round" /></svg>
+          Tableau
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo powerbi-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #F2C811;"><rect x="3" y="12" width="4" height="9" rx="1" /><rect x="10" y="7" width="4" height="14" rx="1" /><rect x="17" y="2" width="4" height="19" rx="1" /></svg>
+          Power BI
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo excel-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #107C41;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zm-7 16V6h6v4a1 1 0 0 0 1 1h4v9H6z"/><path d="M8 10l3 4-3 4h2l2-3 2 3h2l-3-4 3-4h-2l-2 3-2-3H8z"/></svg>
+          Excel PivotTables
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo powerquery-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z M4 12h16 M12 4v16" stroke-dasharray="2" /><path d="M8 8l4 4-4 4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          Power Query
+        </span>
       </div>
     </div>
 
@@ -2147,17 +2374,44 @@
     <div class="skills-group reveal" id="skills-data">
       <div class="skills-group-label">Data Management &amp; Engineering</div>
       <div class="skills-pills">
-        <span class="skill-pill">SQL</span>
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">Pandas</span>
-        <span class="skill-pill">Matplotlib</span>
-        <span class="skill-pill">TensorFlow</span>
-        <span class="skill-pill">Keras</span>
+        <span class="skill-pill">
+          <svg class="pill-logo sql-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"></path></svg>
+          SQL
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo python-logo" viewBox="0 0 24 24" fill="currentColor"><path d="M14.25 2.5a1.75 1.75 0 0 0-1.75 1.75v3h3.5a.75.75 0 0 1 .75.75v3.5a1.75 1.75 0 0 0 1.75 1.75h3a1.75 1.75 0 0 0 1.75-1.75v-3.5a3.5 3.5 0 0 0-3.5-3.5h-1v-2a1.75 1.75 0 0 0-1.75-1.75h-3.5zM9.75 21.5a1.75 1.75 0 0 0 1.75-1.75v-3h-3.5a.75.75 0 0 1-.75-.75v-3.5a1.75 1.75 0 0 0-1.75-1.75h-3a1.75 1.75 0 0 0-1.75 1.75v3.5a3.5 3.5 0 0 0 3.5 3.5h1v2a1.75 1.75 0 0 0 1.75 1.75h3.5z" /></svg>
+          Python
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo pandas-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #130754;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 12c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm-9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4.5 3c-1.66 0-3-1.34-3-3h6c0 1.66-1.34 3-3 3z" /></svg>
+          Pandas
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo matplotlib-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #11557c;"><path d="M3 3v18h18" /><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" /></svg>
+          Matplotlib
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo tensorflow-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #FF9900;"><path d="M12 2.69l5.64 3.25v6.5L12 15.69l-5.64-3.25v-6.5L12 2.69m0-2.69L4 4.62v14.76L12 24l8-4.62V4.62L12 0z"/></svg>
+          TensorFlow
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo keras-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #D00000;"><rect x="2" y="2" width="20" height="20" rx="4" /><path d="M7 6h3v4.5l3.5-4.5h3.5L13 11l4.5 7h-3.5L10 13v5H7V6z" fill="#FFFFFF" /></svg>
+          Keras
+        </span>
         <span class="skill-pill">NLP</span>
         <span class="skill-pill">OCR</span>
-        <span class="skill-pill">Docker</span>
-        <span class="skill-pill">MongoDB</span>
-        <span class="skill-pill">dbt</span>
+        <span class="skill-pill">
+          <svg class="pill-logo docker-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #0db7ed;"><path d="M13.983 11.078h2.119c.102 0 .186-.083.186-.185V9.006a.185.185 0 0 0-.186-.186h-2.119a.185.185 0 0 0-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.65h2.118a.185.185 0 0 0 .186-.186V3.354a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.186.185v1.888c0 .102.084.186.186.186m0 2.828h2.118a.185.185 0 0 0 .186-.185V6.184a.185.185 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.186.185v1.887c0 .102.084.185.186.185m-2.954 2.822h2.119c.102 0 .185-.083.185-.186V9.006a.185.185 0 0 0-.185-.186H8.075a.185.185 0 0 0-.185.186v1.888c0 .102.083.185.185.185m0-2.828h2.119a.185.185 0 0 0 .185-.185V6.184a.185.185 0 0 0-.185-.185H8.075a.185.185 0 0 0-.185.185v1.887c0 .102.083.185.185.185m-2.954 2.828h2.119a.185.185 0 0 0 .185-.186V9.006a.185.185 0 0 0-.185-.186H5.12a.185.185 0 0 0-.185.186v1.888c0 .102.083.185.185.185m0-2.828h2.119a.185.185 0 0 0 .185-.185V6.184a.185.185 0 0 0-.185-.185H5.12a.185.185 0 0 0-.185.185v1.887c0 .102.083.185.185.185m-2.954 2.828h2.119a.185.185 0 0 0 .185-.186V9.006a.185.185 0 0 0-.185-.186H2.167a.185.185 0 0 0-.186.186v1.888c0 .102.084.185.186.185m0-2.828h2.119a.185.185 0 0 0 .185-.185V6.184a.185.185 0 0 0-.185-.185H2.167a.185.185 0 0 0-.186.185v1.887c0 .102.084.185.186.185M23.99 9.868c-.359-1.077-1.472-1.782-2.5-1.782h-.244a.185.185 0 0 1-.186-.185c-.092-2.146-1.579-3.923-3.987-3.923a.185.185 0 0 0-.185.185v2.868c0 .102.083.185.185.185H17.4c1.173 0 2.213.754 2.455 1.876a.185.185 0 0 1-.185.225c-.244-.047-.492-.07-.743-.07h-14.8c-.092 0-.171.066-.184.156C3.627 11.238 2 13.627 2 16.34c0 3.992 3.197 7.235 7.159 7.235h1.22c4.858 0 8.625-3.66 9.4-7.553a7.227 7.227 0 0 0 .211-1.734c0-1.637-.624-3.155-1.722-4.148a.186.186 0 0 1-.035-.22" /></svg>
+          Docker
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo mongodb-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #13aa52;"><path d="M12 2c-.2 0-.4 0-.6.1C8.6 3.1 6 6.8 6 11.2c0 4.8 2.7 8.2 5.4 9.8.3.2.5.3.6.3.1 0 .3-.1.6-.3 2.7-1.6 5.4-5 5.4-9.8 0-4.4-2.6-8.1-5.4-9.1-.2-.1-.4-.1-.6-.1zm0 2.3c2.1 1 3.9 3.9 3.9 6.9 0 3.6-1.8 6.4-3.9 7.8V4.3z" /></svg>
+          MongoDB
+        </span>
+        <span class="skill-pill">
+          <svg class="pill-logo dbt-logo" viewBox="0 0 24 24" fill="currentColor" style="color: #FF6B4A;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.6 14.2v-7.9h2.3c2 0 3.3 1.2 3.3 3.9S14.7 16.2 12.7 16.2h-2.3z" /></svg>
+          dbt
+        </span>
         <span class="skill-pill">ETL workflows</span>
         <span class="skill-pill">Data validation</span>
         <span class="skill-pill">Structured reporting frameworks</span>
@@ -2211,39 +2465,115 @@
   </section>
 
   <!-- ========== CONTACT ========== -->
+  <!-- ========== CONTACT ========== -->
   <section id="contact" class="section">
-    <div class="reveal">
-      <h2 class="contact-headline">Let's Connect</h2>
-      <p class="contact-sub">Open to full-time roles in research administration, operations, and data engineering</p>
-      <div class="contact-links">
-        <a href="mailto:kumardixhantrai@gmail.com" class="contact-link" id="contact-email">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          kumardixhantrai@gmail.com
-        </a>
-        <a href="tel:+14243180147" class="contact-link" id="contact-phone">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path
-              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-          </svg>
-          +1 (424) 318-0147
-        </a>
-        <a href="https://linkedin.com/in/kumardixhantrai" target="_blank" rel="noopener noreferrer" class="contact-link"
-          id="contact-linkedin">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
-            <rect x="2" y="9" width="4" height="12" />
-            <circle cx="4" cy="4" r="2" />
-          </svg>
-          linkedin.com/kumardixhantrai
-        </a>
+    <div class="reveal contact-grid-layout">
+      <div class="contact-info">
+        <h2 class="contact-headline">Let's Connect</h2>
+        <p class="contact-sub">Open to full-time roles in research administration, operations, and data engineering</p>
+        <div class="contact-links">
+          <a href="mailto:kumardixhantrai@gmail.com" class="contact-link" id="contact-email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            kumardixhantrai@gmail.com
+          </a>
+          <a href="tel:+14243180147" class="contact-link" id="contact-phone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            +1 (424) 318-0147
+          </a>
+          <a href="https://linkedin.com/in/kumardixhantrai" target="_blank" rel="noopener noreferrer" class="contact-link"
+            id="contact-linkedin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+            linkedin.com/kumardixhantrai
+          </a>
+        </div>
+        <div class="footer">© 2026 Kumar Dixhant Rai · Built with intention</div>
       </div>
-      <div class="footer">© 2026 Kumar Dixhant Rai · Built with intention</div>
+      
+      <!-- Interactive Mascot column (Snoopy watch face theme) -->
+      <div class="contact-mascot">
+        <div class="contact-mascot-wrapper" id="mascot-wrapper">
+          <svg class="mascot-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+            <!-- Doghouse base -->
+            <rect x="50" y="70" width="100" height="45" style="fill:var(--bg-surface); stroke:var(--text-primary); stroke-width:3; stroke-linejoin:round;" />
+            <path d="M85,115 L85,90 C85,80 115,80 115,90 L115,115" style="fill:var(--bg-base); stroke:var(--text-primary); stroke-width:3;" />
+            
+            <!-- Doghouse roof -->
+            <polygon points="20,70 100,30 180,70 150,70 100,45 50,70" style="fill:#E53E3E; stroke:var(--text-primary); stroke-width:3; stroke-linejoin:round;" />
+            
+            <!-- Woodstock (Little Yellow Bird Companion) -->
+            <g class="woodstock-bird">
+              <path d="M 25 35 C 25 28, 35 28, 35 35 C 35 40, 28 42, 23 40 Z" fill="#FBBF24" stroke="var(--text-primary)" stroke-width="1.5" />
+              <path d="M 28 30 C 27 26, 31 24, 30 22" fill="none" stroke="var(--text-primary)" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M 31 29 C 32 26, 35 26, 34 23" fill="none" stroke="var(--text-primary)" stroke-width="1.5" stroke-linecap="round" />
+              <path d="M 35 33 L 41 35 L 35 37" fill="#F59E0B" stroke="var(--text-primary)" stroke-width="1.5" />
+              <path class="woodstock-wing" d="M 28 35 C 28 33, 24 30, 22 34 C 23 37, 28 36, 28 35 Z" fill="#FBBF24" stroke="var(--text-primary)" stroke-width="1.2" />
+              <circle cx="31" cy="33" r="0.6" fill="#000000" />
+            </g>
+            
+            <!-- SNOOPY SLEEPING -->
+            <g class="snoopy-sleeping">
+              <path d="M 85 41 C 85 30, 130 30, 135 43 L 135 48 L 85 48 Z" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="2.5" stroke-linejoin="round" />
+              <path d="M 125 43 C 125 35, 148 35, 148 45 C 148 48, 135 48, 125 48 Z" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="2.5" stroke-linejoin="round" />
+              <circle cx="147" cy="44" r="2.5" fill="#000000" />
+              <path d="M 115 44 C 115 48, 110 52, 105 52 C 100 52, 100 48, 105 44 Z" fill="#000000" />
+              <ellipse cx="95" cy="36" rx="3" ry="5" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="2" transform="rotate(-15 95 36)" />
+              <ellipse cx="110" cy="36" rx="3" ry="5" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="2" transform="rotate(15 110 36)" />
+              
+              <!-- Floating Zzz -->
+              <g class="snoopy-zzz">
+                <text x="145" y="25" font-family="var(--font-display)" font-size="10" fill="var(--accent-teal)" font-weight="bold" opacity="0.8">z</text>
+                <text x="153" y="18" font-family="var(--font-display)" font-size="13" fill="var(--accent-teal)" font-weight="bold" opacity="0.6">Z</text>
+                <text x="163" y="8" font-family="var(--font-display)" font-size="16" fill="var(--accent-teal)" font-weight="bold" opacity="0.4">Z</text>
+              </g>
+            </g>
+            
+            <!-- SNOOPY WOKE -->
+            <g class="snoopy-woke">
+              <!-- Tail -->
+              <path class="snoopy-tail" d="M 68 53 C 58 53, 50 48, 48 40 C 49 43, 58 48, 68 48" stroke="var(--text-primary)" stroke-width="2.5" stroke-linecap="round" fill="none" />
+              
+              <!-- Body sitting -->
+              <path d="M 75 48 C 75 36, 95 36, 95 48 Z" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="2.5" stroke-linejoin="round" />
+              <path d="M 70 48 C 70 45, 80 43, 85 48 Z" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="2" />
+              
+              <!-- Collar -->
+              <rect x="80" y="27" width="12" height="3" fill="#E53E3E" rx="1" stroke="var(--text-primary)" stroke-width="1" />
+              
+              <!-- Head sitting up -->
+              <path d="M 80 27 C 72 27, 72 10, 90 10 C 105 10, 108 20, 100 27 Z" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="2.5" stroke-linejoin="round" />
+              <path d="M 90 10 C 95 10, 115 15, 115 22 C 115 25, 105 27, 98 27" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="2.5" stroke-linejoin="round" />
+              <ellipse cx="114" cy="20" rx="3.5" ry="2.5" fill="#000000" />
+              
+              <!-- Floppy Ear -->
+              <path class="snoopy-ear" d="M 82 20 C 82 28, 77 38, 73 38 C 69 38, 72 28, 77 20 Z" fill="#000000" />
+              
+              <!-- Eyeballs -->
+              <ellipse cx="90" cy="18" rx="2" ry="3.5" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="1.5" />
+              <ellipse cx="98" cy="18" rx="2" ry="3.5" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="1.5" />
+              
+              <!-- Pupils (tracking cursor) -->
+              <circle class="snoopy-pupil" cx="90" cy="18" r="1.2" fill="#000000" />
+              <circle class="snoopy-pupil" cx="98" cy="18" r="1.2" fill="#000000" />
+              
+              <!-- Front paw -->
+              <ellipse cx="88" cy="40" rx="4" ry="7" fill="#FFFFFF" stroke="var(--text-primary)" stroke-width="2" transform="rotate(20 88 40)" />
+            </g>
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2690,6 +3020,47 @@
       window.addEventListener('scroll', handleScrollTracker, { passive: true });
       window.addEventListener('load', handleScrollTracker);
       handleScrollTracker();
+
+      // ==========================================
+      // SNOOPY EYE-TRACKING & RISE-TO-WAKE LOGIC
+      // ==========================================
+      const pupils = document.querySelectorAll('.snoopy-pupil');
+      const mascotWrapper = document.getElementById('mascot-wrapper');
+
+      if (mascotWrapper) {
+        const mascotObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Rise-to-wake wiggles Snoopy for 3 seconds on scroll-in
+              mascotWrapper.classList.add('woke');
+              setTimeout(() => {
+                mascotWrapper.classList.remove('woke');
+              }, 3000);
+              mascotObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        mascotObserver.observe(mascotWrapper);
+      }
+
+      function trackSnoopyEyes(e) {
+        if (!pupils.length) return;
+        pupils.forEach(pupil => {
+          const rect = pupil.getBoundingClientRect();
+          const pupilX = rect.left + rect.width / 2;
+          const pupilY = rect.top + rect.height / 2;
+          
+          const angle = Math.atan2(e.clientY - pupilY, e.clientX - pupilX);
+          const maxDisplacement = 1.6; // keep pupils inside eyeball boundary
+          
+          const dx = Math.cos(angle) * maxDisplacement;
+          const dy = Math.sin(angle) * maxDisplacement;
+          
+          pupil.setAttribute('transform', `translate(${dx}, ${dy})`);
+        });
+      }
+
+      window.addEventListener('mousemove', trackSnoopyEyes);
 
     })();
   </script>
